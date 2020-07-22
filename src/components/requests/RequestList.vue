@@ -14,9 +14,9 @@ export default {
         { id: "2", method: "POST", status: 200 },
         { id: "3", method: "PUT", status: 200 },
         { id: "4", method: "DELETE", status: 200 },
-        { id: "2", method: "POST", status: 200 },
-        { id: "3", method: "PUT", status: 200 },
-        { id: "4", method: "DELETE", status: 200 }
+        { id: "5", method: "POST", status: 200 },
+        { id: "6", method: "PUT", status: 200 },
+        { id: "7", method: "DELETE", status: 200 }
       ]
     };
   },

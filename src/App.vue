@@ -6,14 +6,17 @@
         <router-view />
       </main>
     </div>
+    <main-footer></main-footer>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 export default {
   components: {
-    mainHeader: Header
+    mainHeader: Header,
+    mainFooter: Footer
   }
 };
 </script>
