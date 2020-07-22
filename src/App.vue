@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <main-header></main-header>
-    <main>
-      <div class="container">
-        <div class="row">
-          <router-view />
-        </div>
-      </div>
-    </main>
+  <div class="container">
+    <div class="column is-flex">
+      <main-header class="column is-3"></main-header>
+      <main class="column is-9">
+        <router-view />
+      </main>
+    </div>
   </div>
 </template>
 
@@ -20,8 +18,5 @@ export default {
 };
 </script>
 
-<style scoped>
-main {
-  padding-left: 300px;
-}
+<style>
 </style>

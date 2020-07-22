@@ -2,41 +2,37 @@
   <div>
     <search-bar>
       <template v-slot:search>
-        <div class="row">
-          <div class="input-field">
-            <i class="material-icons prefix">search</i>
-            <input type="text" class="validate" placeholder="Search Project" />
-          </div>
-        </div>
+        <input class="input is-info" type="text" placeholder="Project name" />
       </template>
       <template v-slot:create>
-        <button
-          class="waves-effect waves-light btn modal-trigger input-field"
-          data-target="new-project-modal"
-        >
-          Create Project
-          <i class="material-icons right">lightbulb_outline</i>
+        <button class="button is-info" @click="openModal">
+          <span>Create Project</span>
+          <span class="icon is-small">
+            <i class="fas fa-lightbulb"></i>
+          </span>
         </button>
       </template>
     </search-bar>
     <new-project></new-project>
-    <div class="col m12">
+    <div>
       <project-list></project-list>
     </div>
   </div>
 </template>
 
 <script>
-import SearchBar from "../components/SearchBar";
+import BaseSearchBar from "../components/Base/BaseSearchBar";
 import NewProject from "../components/projects/NewProject";
 import ProjectList from "../components/projects/ProjectList";
+import baseMixin from "../mixin/baseModalMixin";
 
 export default {
   components: {
-    searchBar: SearchBar,
+    searchBar: BaseSearchBar,
     newProject: NewProject,
     projectList: ProjectList
-  }
+  },
+  mixins: [baseMixin]
 };
 </script>
   

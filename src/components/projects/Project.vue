@@ -1,21 +1,33 @@
 <template>
-  <div class="col m4">
-    <div class="card">
-      <div class="card-content blue lighten-3">
-        <p>{{name}}</p>
-      </div>
-      <div class="card-action">
-        <a href="#">Open Project</a>
-      </div>
-    </div>
+  <div class="column is-6 selectable is-inline-block" @click="openProject">
+    <article class="message is-info">
+      <div class="message-body">{{name}}</div>
+    </article>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["name"]
+  props: ["name"],
+  methods: {
+    openProject() {
+      this.$router.push({ path: "/requests" });
+    }
+  }
 };
 </script>
 
-<style>
+<style scoped>
+.message:hover {
+  background-color: hsl(204, 86%, 53%);
+}
+
+.message-body:hover {
+  border-color: hsl(48, 100%, 67%) !important;
+  color: white !important;
+}
+
+.selectable {
+  cursor: pointer;
+}
 </style>

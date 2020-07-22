@@ -2,7 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import materialize from "../public/js/material";
+
+require("../public/scss/main.scss");
 
 Vue.config.productionTip = false;
 
