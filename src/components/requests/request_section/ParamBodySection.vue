@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="field my-0">
-      <div class="column is-2 is-offset-10">
+      <div class="column is-10 is-inline-block has-text-weight-bold">Edit directly</div>
+      <div class="column is-2 is-inline-block">
         <button
           class="button is-small is-primary is-outlined"
           @click="changeKeyValueEditMode"
@@ -17,14 +18,14 @@
 export default {
   data() {
     return {
-      value: ""
+      value: "",
     };
   },
   methods: {
     changeKeyValueEditMode() {
       this.$emit("isKeyValueMode");
-    }
-  }
+    },
+  },
 };
 </script>
 

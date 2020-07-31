@@ -3,12 +3,6 @@
     <base-tab>
       <template #tab-item>
         <base-tab-item
-          :tab-title="'Params'"
-          :tab-icon="'align-left'"
-          :activeTab="activeTab"
-          @click.native="changeTab('Params')"
-        ></base-tab-item>
-        <base-tab-item
           :tab-title="'Query'"
           :tab-icon="'sitemap'"
           :activeTab="activeTab"
@@ -28,29 +22,27 @@
         ></base-tab-item>
       </template>
     </base-tab>
-    <keep-alive>
-      <component :is="currentTab"></component>
-    </keep-alive>
+    <component :is="currentTab" :tabName="activeTab"></component>
   </div>
 </template>
 
 <script>
 import BaseTabs from "@/components/Base/BaseTabs";
 import BaseTabItem from "@/components/Base/BaseTabItem";
-import ParamSection from "../ParamSection";
-import BodySection from "../BodySection";
+import ParamSection from "./ParamSection";
+import BodySection from "./BodySection";
 export default {
   data() {
     return {
-      activeTab: "Params",
-      currentTab: "ParamSection"
+      activeTab: "Query",
+      currentTab: "ParamSection",
     };
   },
   components: {
     baseTab: BaseTabs,
     baseTabItem: BaseTabItem,
     ParamSection: ParamSection,
-    BodySection: BodySection
+    BodySection: BodySection,
   },
   methods: {
     changeTab(tab) {
@@ -60,8 +52,8 @@ export default {
       } else {
         this.currentTab = "ParamSection";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
