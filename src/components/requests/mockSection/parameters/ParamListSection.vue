@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     paramList() {
-      return this.$store.getters["newRequest/requestData"](
+      return this.$store.getters["mockRequest/requestData"](
         this.tabName,
         this.sectionType
       );
@@ -61,12 +61,12 @@ export default {
       this.$emit("isFullMode");
     },
     saveParamList() {
-      this.$store.commit("newRequest/setParameters", {
+      this.$store.commit("mockRequest/setParameters", {
         tabName: this.tabName,
         sectionType: this.sectionType,
         parameters: this.paramList,
       });
-      this.$store.commit("newRequest/buildBodyParams", {
+      this.$store.commit("mockRequest/buildBodyParams", {
         tabName: this.tabName,
         sectionType: this.sectionType,
       });

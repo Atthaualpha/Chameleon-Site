@@ -16,10 +16,10 @@ export default {
   computed: {
     jsonData: {
       get() {
-        return this.$store.getters["newRequest/body"](this.sectionType);
+        return this.$store.getters["mockRequest/body"](this.sectionType);
       },
       set(body) {
-        this.$store.commit("newRequest/setBody", {
+        this.$store.commit("mockRequest/setBody", {
           sectionType: this.sectionType,
           body,
         });

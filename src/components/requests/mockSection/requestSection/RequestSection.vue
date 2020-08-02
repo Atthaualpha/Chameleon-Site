@@ -3,11 +3,15 @@
     <base-tabs>
       <template #tab-item>
         <base-tab-item
-          :tab-title="'Body'"
-          :tab-icon="'code'"
+          :tab-title="'Query'"
+          :tab-icon="'sitemap'"
           :activeTab="activeTab"
-          @click.native="changeTab('Body')"
-        ></base-tab-item>
+          @click.native="changeTab('Query')"
+        >
+          <template #bagde>
+            <span class="badge is-top-left is-small">{{queryCount}}</span>
+          </template>
+        </base-tab-item>
         <base-tab-item
           :tab-title="'Headers'"
           :tab-icon="'map'"
@@ -18,9 +22,15 @@
             <span class="badge is-top-left is-small">{{headerCount}}</span>
           </template>
         </base-tab-item>
+        <base-tab-item
+          :tab-title="'Body'"
+          :tab-icon="'code'"
+          :activeTab="activeTab"
+          @click.native="changeTab('Body')"
+        ></base-tab-item>
       </template>
     </base-tabs>
-    <component :is="currentTab" :tabName="activeTab" :sectionType="'response'"></component>
+    <component :is="currentTab" :tabName="activeTab" :sectionType="'request'"></component>
   </div>
 </template>
 
@@ -32,15 +42,19 @@ import BodySection from "../parameters/BodySection";
 export default {
   data() {
     return {
-      activeTab: "Body",
-      currentTab: "BodySection",
+      activeTab: "Query",
+      currentTab: "ParamSection",
     };
   },
   computed: {
+    queryCount() {
+      return this.$store.getters["mockRequest/requestData"]("Query", "request")
+        .length;
+    },
     headerCount() {
-      return this.$store.getters["newRequest/requestData"](
+      return this.$store.getters["mockRequest/requestData"](
         "Headers",
-        "response"
+        "request"
       ).length;
     },
   },

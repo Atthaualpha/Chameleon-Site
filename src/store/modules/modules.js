@@ -1,7 +1,7 @@
 import baseModal from "./Base/baseModal";
-import newRequest from "./NewRequest/newRequest";
+import mockRequest from "./MockRequest/mockRequest";
 
 export default {
   baseModal,
-  newRequest,
+  mockRequest,
 };

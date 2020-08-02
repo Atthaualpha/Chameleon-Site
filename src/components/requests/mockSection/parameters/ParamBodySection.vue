@@ -30,13 +30,13 @@ export default {
   computed: {
     bodyParams: {
       get() {
-        return this.$store.getters["newRequest/bodyParams"](
+        return this.$store.getters["mockRequest/bodyParams"](
           this.tabName,
           this.sectionType
         );
       },
       set(newValue) {
-        this.$store.commit("newRequest/setBodyParams", {
+        this.$store.commit("mockRequest/setBodyParams", {
           tabName: this.tabName,
           sectionType: this.sectionType,
           body: newValue,
@@ -67,12 +67,12 @@ export default {
           paramList.push(paramItem);
         });
       }
-      this.$store.commit("newRequest/setParameters", {
+      this.$store.commit("mockRequest/setParameters", {
         tabName: this.tabName,
         sectionType: this.sectionType,
         parameters: paramList,
       });
-      this.$store.commit("newRequest/buildBodyParams", {
+      this.$store.commit("mockRequest/buildBodyParams", {
         tabName: this.tabName,
         sectionType: this.sectionType,
       });

@@ -1,7 +1,7 @@
 const state = () => ({
   request: {
     name: "",
-    method: "",
+    method: "GET",
     url: "",
     queryParams: [],
     headers: [],
