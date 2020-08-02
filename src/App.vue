@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="column is-flex">
-      <main-header class="column is-3"></main-header>
-      <main class="column is-9">
+      <main-header class="column is-2"></main-header>
+      <main class="column is-10">
         <router-view />
+        <main-footer></main-footer>
       </main>
     </div>
-    <main-footer></main-footer>
   </div>
 </template>
 
@@ -16,10 +16,16 @@ import Footer from "./components/Footer";
 export default {
   components: {
     mainHeader: Header,
-    mainFooter: Footer
-  }
+    mainFooter: Footer,
+  },
 };
 </script>
 
 <style>
+.jsoneditor-menu {
+  display: none;
+}
+body {
+  background-color: rgb(250, 250, 250);
+}
 </style>

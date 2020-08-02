@@ -1,19 +1,27 @@
 <template>
   <div>
-    <base-tab>
+    <base-tabs>
       <template #tab-item>
         <base-tab-item
           :tab-title="'Query'"
           :tab-icon="'sitemap'"
           :activeTab="activeTab"
           @click.native="changeTab('Query')"
-        ></base-tab-item>
+        >
+          <template #bagde>
+            <span class="badge is-top-left is-small">{{queryCount}}</span>
+          </template>
+        </base-tab-item>
         <base-tab-item
           :tab-title="'Headers'"
           :tab-icon="'map'"
           :activeTab="activeTab"
           @click.native="changeTab('Headers')"
-        ></base-tab-item>
+        >
+          <template #bagde>
+            <span class="badge is-top-left is-small">{{headerCount}}</span>
+          </template>
+        </base-tab-item>
         <base-tab-item
           :tab-title="'Body'"
           :tab-icon="'code'"
@@ -21,16 +29,16 @@
           @click.native="changeTab('Body')"
         ></base-tab-item>
       </template>
-    </base-tab>
-    <component :is="currentTab" :tabName="activeTab"></component>
+    </base-tabs>
+    <component :is="currentTab" :tabName="activeTab" :sectionType="'request'"></component>
   </div>
 </template>
 
 <script>
 import BaseTabs from "@/components/Base/BaseTabs";
 import BaseTabItem from "@/components/Base/BaseTabItem";
-import ParamSection from "./ParamSection";
-import BodySection from "./BodySection";
+import ParamSection from "../parameters/ParamSection";
+import BodySection from "../parameters/BodySection";
 export default {
   data() {
     return {
@@ -38,11 +46,21 @@ export default {
       currentTab: "ParamSection",
     };
   },
+  computed: {
+    queryCount() {
+      return this.$store.getters["newRequest/requestData"]("Query", "request")
+        .length;
+    },
+    headerCount() {
+      return this.$store.getters["newRequest/requestData"]("Headers", "request")
+        .length;
+    },
+  },
   components: {
-    baseTab: BaseTabs,
-    baseTabItem: BaseTabItem,
-    ParamSection: ParamSection,
-    BodySection: BodySection,
+    BaseTabs,
+    BaseTabItem,
+    ParamSection,
+    BodySection,
   },
   methods: {
     changeTab(tab) {
