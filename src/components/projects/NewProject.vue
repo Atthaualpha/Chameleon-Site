@@ -4,7 +4,7 @@
     <template #md-body>
       <div class="field">
         <label class="label">Project Name</label>
-        <input type="text" class="input" placeholder="Project Name" />
+        <input type="text" class="input" placeholder="Project Name" v-model="name" />
       </div>
     </template>
   </base-modal>
@@ -12,15 +12,28 @@
 
 <script>
 import BaseModal from "../Base/BaseModal";
+import axios from "axios";
 export default {
+  data() {
+    return {
+      name: "",
+    };
+  },
   methods: {
     createProject() {
-      console.log("created");
-    }
+      axios
+        .post("/project", { name: this.name })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   components: {
-    baseModal: BaseModal
-  }
+    baseModal: BaseModal,
+  },
 };
 </script>
 

@@ -1,24 +1,28 @@
 <template>
   <div>
-    <project v-for="(project,i) in projects" :key="i" :name="project.name"></project>
+    <project v-for="(project) in projects" :key="project.id" :project="project"></project>
   </div>
 </template>
 
 <script>
 import Project from "./Project";
+import axios from "axios";
 export default {
-  data() {
-    return {
-      projects: [
-        { name: "P1" },
-        { name: "P2" },
-        { name: "P3" },
-        { name: "P4" },
-      ],
-    };
+  computed: {
+    projects() {
+      return this.$store.getters["projects/projectList"];
+    },
+  },
+  methods: {
+    async searchProjects() {
+      await this.$store.dispatch("projects/searchProjects");
+    },
   },
   components: {
     project: Project,
+  },
+  mounted() {
+    this.searchProjects();
   },
 };
 </script>
