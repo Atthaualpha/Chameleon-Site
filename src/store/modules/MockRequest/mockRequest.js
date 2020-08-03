@@ -8,6 +8,7 @@ const state = () => ({
     body: "",
     responseHeaders: [],
     responseBody: [],
+    status: 200,
   },
   queryBodyParams: "",
   headersBodyParams: "",
@@ -23,6 +24,9 @@ const mutations = {
   },
   setUrl(state, url) {
     state.request.url = url;
+  },
+  setStatus(state, status) {
+    state.request.status = status;
   },
   setParameters(state, { tabName, sectionType, parameters }) {
     saveParamList(state, tabName, sectionType, parameters);
@@ -89,6 +93,9 @@ const getters = {
   },
   method(state) {
     return state.request.method;
+  },
+  status(state) {
+    return state.request.status;
   },
   bodyParams(state) {
     return (tabName, section) => {

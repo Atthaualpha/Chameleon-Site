@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div>
     <project v-for="(project,i) in projects" :key="i" :name="project.name"></project>
   </div>
 </template>
@@ -9,12 +9,17 @@ import Project from "./Project";
 export default {
   data() {
     return {
-      projects: [{ name: "P1" }, { name: "P2" }, { name: "P3" }, { name: "P4" }]
+      projects: [
+        { name: "P1" },
+        { name: "P2" },
+        { name: "P3" },
+        { name: "P4" },
+      ],
     };
   },
   components: {
-    project: Project
-  }
+    project: Project,
+  },
 };
 </script>
 

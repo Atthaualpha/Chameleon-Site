@@ -5,7 +5,7 @@
         <input class="input is-info" type="text" placeholder="Project name" />
       </template>
       <template v-slot:create>
-        <button class="button is-info" @click="openModal">
+        <button class="button is-info is-outlined" @click="openModal">
           <span>Create Project</span>
           <span class="icon is-small">
             <i class="fas fa-lightbulb"></i>
@@ -30,9 +30,9 @@ export default {
   components: {
     searchBar: BaseSearchBar,
     newProject: NewProject,
-    projectList: ProjectList
+    projectList: ProjectList,
   },
-  mixins: [baseMixin]
+  mixins: [baseMixin],
 };
 </script>
   

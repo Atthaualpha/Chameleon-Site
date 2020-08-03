@@ -13,8 +13,8 @@
           <slot name="md-body"></slot>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success" @click="mainAction">Create Project</button>
-          <button class="button is-danger" @click="closeModal">Cancel</button>
+          <button class="button is-success is-outlined" @click="mainAction">Create Project</button>
+          <button class="button is-danger is-outlined" @click="closeModal">Cancel</button>
         </footer>
       </div>
     </div>
@@ -28,8 +28,8 @@ export default {
   methods: {
     mainAction() {
       this.$emit("mainAction");
-    }
-  }
+    },
+  },
 };
 </script>
 

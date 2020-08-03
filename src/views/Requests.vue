@@ -24,7 +24,7 @@
         </div>
       </template>
       <template v-slot:create>
-        <button class="button is-info" @click="redirectCreateRequest">
+        <button class="button is-info is-outlined" @click="redirectCreateRequest">
           <span>Create Request</span>
           <span class="icon is-small">
             <i class="fas fa-paper-plane"></i>
@@ -43,14 +43,14 @@ import RestMethodMixin from "../mixin/restMethodMixin";
 export default {
   components: {
     requestList: RequestList,
-    baseSearchBar: BaseSearchBar
+    baseSearchBar: BaseSearchBar,
   },
   mixins: [RestMethodMixin],
   methods: {
     redirectCreateRequest() {
       this.$router.push({ name: "NewRequest" });
-    }
-  }
+    },
+  },
 };
 </script>
 

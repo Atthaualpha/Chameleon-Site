@@ -8,9 +8,7 @@
 import MockRequest from "../mockSection/mockRequest";
 export default {
   methods: {
-    createRequest() {
-      console.log("Request created");
-    },
+    createRequest() {},
   },
   components: {
     MockRequest,

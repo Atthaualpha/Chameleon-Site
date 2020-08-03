@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="menu-label has-text-weight-bold is-size-6">Request</p>
     <base-tabs>
       <template #tab-item>
         <base-tab-item

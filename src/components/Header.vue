@@ -8,8 +8,8 @@
 import NavMenu from "./NavMenu";
 export default {
   components: {
-    navMenu: NavMenu
-  }
+    navMenu: NavMenu,
+  },
 };
 </script>
 

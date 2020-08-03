@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer class="footer has-background-info-light">
     <div class="content has-text-centered">
       <p>
         Powered by

@@ -26,6 +26,6 @@ export default {
   display: none;
 }
 body {
-  background-color: rgb(250, 250, 250);
+  background-color: hsl(206, 70%, 96%);
 }
 </style>

@@ -4,7 +4,7 @@
     @mouseenter="enterMethod"
     @mouseleave="leaveMethod"
   >
-    <article class="panel" :class="'is-'+methodColor">
+    <article class="panel has-background-white" :class="'is-'+methodColor">
       <p class="panel-heading has-text-white" :class="headColor">{{request.method}}</p>
       <div class="panel-block">Url</div>
       <div class="panel-block">Status: {{request.status}}</div>
@@ -21,17 +21,17 @@ export default {
         { GET: "success" },
         { POST: "warning" },
         { PUT: "info" },
-        { DELETE: "danger" }
+        { DELETE: "danger" },
       ],
-      headColor: ""
+      headColor: "",
     };
   },
   computed: {
     methodColor() {
-      return this.methodColors.find(color => color[this.request.method])[
+      return this.methodColors.find((color) => color[this.request.method])[
         this.request.method
       ];
-    }
+    },
   },
   methods: {
     enterMethod() {
@@ -39,8 +39,8 @@ export default {
     },
     leaveMethod() {
       this.headColor = "";
-    }
-  }
+    },
+  },
 };
 </script>
 
