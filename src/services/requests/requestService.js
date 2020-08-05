@@ -14,7 +14,15 @@ const searchRequestById = (requestId, callback) => {
     .catch((err) => callback(err));
 };
 
+const deleteRequest = (projectId, requestId, callback) => {
+  axios
+    .delete("/mock-request/" + projectId, { data: [requestId] })
+    .then((res) => callback(null, res))
+    .catch((err) => callback(err));
+};
+
 export default {
   searchRequestByProject,
   searchRequestById,
+  deleteRequest,
 };

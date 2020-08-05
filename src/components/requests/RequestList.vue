@@ -1,6 +1,11 @@
 <template>
   <div>
-    <request-mock v-for="request in requestList" :key="request.id" :request="request"></request-mock>
+    <request-mock
+      @requestDeleted="removeRequest"
+      v-for="request in requestList"
+      :key="request.id"
+      :request="request"
+    ></request-mock>
   </div>
 </template>
 
@@ -11,6 +16,14 @@ export default {
     requestList: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    removeRequest(requestId) {
+      const requestIndex = this.requestList.findIndex(
+        (request) => request._id == requestId
+      );
+      this.requestList.splice(requestIndex, 1);
     },
   },
   components: {

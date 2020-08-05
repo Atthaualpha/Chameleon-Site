@@ -16,7 +16,7 @@ export default {
   computed: {
     jsonData: {
       get() {
-        return this.$store.getters["mockRequest/body"](this.sectionType);
+        return this.$store.getters["mockRequest/body"](this.sectionType) || [];
       },
       set(body) {
         this.$store.commit("mockRequest/setBody", {

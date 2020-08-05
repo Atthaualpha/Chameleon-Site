@@ -8,6 +8,9 @@
 import MockRequest from "../mockSection/mockRequest";
 import axios from "axios";
 export default {
+  beforeRouteEnter(to, from, next) {
+    next((vm) => vm.$store.commit("mockRequest/clearRequest"));
+  },
   methods: {
     createRequest() {
       const newRequest = this.$store.getters["mockRequest/request"];
@@ -15,7 +18,6 @@ export default {
         .post("/mock-request/" + this.$route.params.projectId, newRequest)
         .then((res) => {
           if (res.completed) {
-            console.log(res);
             this.$store.commit("mockRequest/clearRequest");
           }
         })
