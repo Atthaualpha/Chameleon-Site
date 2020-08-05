@@ -1,7 +1,7 @@
 const state = () => ({
   request: {
     name: "",
-    restMethod: "GET",
+    method: "GET",
     url: "",
     queryParams: [],
     headers: [],
@@ -82,7 +82,7 @@ const mutations = {
   clearRequest(state) {
     const newRequest = {
       name: "",
-      restMethod: "GET",
+      method: "GET",
       url: "",
       queryParams: [],
       headers: [],
@@ -109,7 +109,7 @@ const getters = {
     return state.request.name;
   },
   method(state) {
-    return state.request.restMethod;
+    return state.request.method;
   },
   status(state) {
     return state.request.status;

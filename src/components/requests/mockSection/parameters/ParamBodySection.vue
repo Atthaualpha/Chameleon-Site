@@ -39,7 +39,7 @@ export default {
         this.$store.commit("mockRequest/setBodyParams", {
           tabName: this.tabName,
           sectionType: this.sectionType,
-          body: newValue,
+          bodyParam: newValue,
         });
       },
     },

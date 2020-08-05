@@ -6,7 +6,7 @@
     @click="redirectEditRequest"
   >
     <article class="panel has-background-white" :class="'is-'+methodColor">
-      <p class="panel-heading has-text-white" :class="headColor">{{request.restMethod}}</p>
+      <p class="panel-heading has-text-white" :class="headColor">{{request.method}}</p>
       <div class="panel-block">
         <p>
           <span class="has-text-weight-bold">Url:</span>
@@ -44,8 +44,8 @@ export default {
   },
   computed: {
     methodColor() {
-      return this.methodColors.find((color) => color[this.request.restMethod])[
-        this.request.restMethod
+      return this.methodColors.find((color) => color[this.request.method])[
+        this.request.method
       ];
     },
   },
@@ -59,7 +59,7 @@ export default {
     redirectEditRequest() {
       this.$router.push({
         name: "EditRequest",
-        params: { requestId: this.request.id },
+        params: { requestId: this.request._id },
       });
     },
   },

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     openProject() {
-      this.$router.push({ path: "/requests/" + this.project.id });
+      this.$router.push({ path: "/requests/" + this.project._id });
     },
     changeTitle(newTitle) {
       this.title = newTitle;
@@ -73,7 +73,7 @@ export default {
     },
     deleteProject() {
       this.$store.dispatch("projects/deleteProject", {
-        projectId: this.project.id,
+        projectId: this.project._id,
       });
     },
   },
