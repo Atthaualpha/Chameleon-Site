@@ -32,7 +32,7 @@
         </button>
       </template>
     </base-search-bar>
-    <request-list></request-list>
+    <request-list :requestList="requestList"></request-list>
   </div>
 </template>
 
@@ -40,15 +40,35 @@
 import RequestList from "../components/requests/RequestList";
 import BaseSearchBar from "../components/Base/BaseSearchBar";
 import RestMethodMixin from "../mixin/restMethodMixin";
+import axios from "axios";
+import requestService from "../services/requests/requestService";
 export default {
+  data() {
+    return {
+      requestList: [],
+    };
+  },
   components: {
     requestList: RequestList,
     baseSearchBar: BaseSearchBar,
   },
   mixins: [RestMethodMixin],
+
+  beforeRouteEnter(to, from, next) {
+    requestService.searchRequestByProject(to.params.projectId, (err, res) => {
+      next((vm) => vm.setRequestList(res.response.requestMocks));
+    });
+  },
+
   methods: {
+    setRequestList(resultList) {
+      this.requestList = resultList;
+    },
     redirectCreateRequest() {
-      this.$router.push({ name: "NewRequest" });
+      this.$router.push({
+        name: "NewRequest",
+        params: { projectId: this.$route.params.projectId },
+      });
     },
   },
 };

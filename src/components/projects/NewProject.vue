@@ -21,14 +21,9 @@ export default {
   },
   methods: {
     createProject() {
-      axios
-        .post("/project", { name: this.name })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$store.dispatch("projects/createProject", { name: this.name });
+      this.$store.commit("baseModal/closeModal");
+      this.name = "";
     },
   },
   components: {

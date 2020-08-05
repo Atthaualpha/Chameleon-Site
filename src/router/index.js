@@ -17,17 +17,25 @@ const routes = [
     component: Projects,
   },
   {
-    path: "/requests",
+    path: "/requests/:projectId",
     name: "RequestList",
     component: () =>
       import(/* webpackChunkName: "requests" */ "../views/Requests.vue"),
   },
   {
-    path: "/new-request",
+    path: "/new-request/:projectId",
     name: "NewRequest",
     component: () =>
       import(
         /* webpackChunkName: "new-request" */ "../components/requests/newRequest/NewRequest.vue"
+      ),
+  },
+  {
+    path: "/edit-request/:requestId",
+    name: "EditRequest",
+    component: () =>
+      import(
+        /* webpackChunkName: "edit-request" */ "../components/requests/editRequest/editRequest.vue"
       ),
   },
 ];

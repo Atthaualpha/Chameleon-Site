@@ -1,7 +1,7 @@
 const state = () => ({
   request: {
     name: "",
-    method: "GET",
+    restMethod: "GET",
     url: "",
     queryParams: [],
     headers: [],
@@ -79,6 +79,23 @@ const mutations = {
       buildBody(state, "Query", sectionType)
     );
   },
+  clearRequest(state) {
+    const newRequest = {
+      name: "",
+      restMethod: "GET",
+      url: "",
+      queryParams: [],
+      headers: [],
+      body: "",
+      responseHeaders: [],
+      responseBody: [],
+      status: 200,
+    };
+    state.request = newRequest;
+  },
+  setRequest(state, request) {
+    state.request = request;
+  },
 };
 
 const getters = {
@@ -92,7 +109,7 @@ const getters = {
     return state.request.name;
   },
   method(state) {
-    return state.request.method;
+    return state.request.restMethod;
   },
   status(state) {
     return state.request.status;

@@ -3,18 +3,34 @@
     class="column is-6 is-inline-block selectable"
     @mouseenter="enterMethod"
     @mouseleave="leaveMethod"
+    @click="redirectEditRequest"
   >
     <article class="panel has-background-white" :class="'is-'+methodColor">
-      <p class="panel-heading has-text-white" :class="headColor">{{request.method}}</p>
-      <div class="panel-block">Url</div>
-      <div class="panel-block">Status: {{request.status}}</div>
+      <p class="panel-heading has-text-white" :class="headColor">{{request.restMethod}}</p>
+      <div class="panel-block">
+        <p>
+          <span class="has-text-weight-bold">Url:</span>
+          {{request.url}}
+        </p>
+      </div>
+      <div class="panel-block">
+        <p>
+          <span class="has-text-weight-bold">Status:</span>
+          {{request.status}}
+        </p>
+      </div>
     </article>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["request"],
+  props: {
+    request: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       methodColors: [
@@ -28,8 +44,8 @@ export default {
   },
   computed: {
     methodColor() {
-      return this.methodColors.find((color) => color[this.request.method])[
-        this.request.method
+      return this.methodColors.find((color) => color[this.request.restMethod])[
+        this.request.restMethod
       ];
     },
   },
@@ -39,6 +55,12 @@ export default {
     },
     leaveMethod() {
       this.headColor = "";
+    },
+    redirectEditRequest() {
+      this.$router.push({
+        name: "EditRequest",
+        params: { requestId: this.request.id },
+      });
     },
   },
 };
