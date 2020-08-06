@@ -26,8 +26,11 @@ export default {
         .put("/mock-request/" + this.$route.params.requestId, editedRequest)
         .then((res) => {
           if (res.completed) {
-            console.log(res);
             this.$store.commit("mockRequest/clearRequest");
+            this.$router.push({
+              name: "RequestList",
+              params: { projectId: editedRequest.projectId },
+            });
           }
         })
         .catch((err) => console.log(err));

@@ -13,6 +13,7 @@
 <script>
 import BaseModal from "../Base/BaseModal";
 import axios from "axios";
+import projectService from "@/services/projects/projectService";
 export default {
   data() {
     return {
@@ -21,9 +22,16 @@ export default {
   },
   methods: {
     createProject() {
-      this.$store.dispatch("projects/createProject", { name: this.name });
-      this.$store.commit("baseModal/closeModal");
-      this.name = "";
+      projectService.createProject({ name: this.name }, (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+
+        this.$store.commit("baseModal/closeModal");
+        this.name = "";
+        this.$bus.emit("searchProjectList");
+      });
     },
   },
   components: {

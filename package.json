@@ -14,6 +14,7 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^9.0.2",
     "vue": "^2.6.11",
+    "vue-bus": "^1.2.1",
     "vue-json-editor": "^1.4.2",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

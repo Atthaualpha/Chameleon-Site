@@ -19,6 +19,10 @@ export default {
         .then((res) => {
           if (res.completed) {
             this.$store.commit("mockRequest/clearRequest");
+            this.$router.push({
+              name: "RequestList",
+              params: { projectId: this.$route.params.projectId },
+            });
           }
         })
         .catch((err) => console.log(err));

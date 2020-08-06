@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import projectService from "@/services/projects/projectService";
 export default {
   props: {
     project: {
@@ -66,14 +67,29 @@ export default {
     changeEditMode(mode) {
       this.isEditMode = mode;
     },
-    async updateProject() {
-      this.$store.dispatch("projects/updateProject", this.project);
-      this.changeEditMode(false);
-      this.changeTitle(this.project.name);
+    updateProject() {
+      projectService.updateProject(this.project, (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        if (result) {
+          this.$bus.emit("projectUpdated", this.project);
+          this.changeEditMode(false);
+          this.changeTitle(this.project.name);
+        }
+      });
     },
     deleteProject() {
-      this.$store.dispatch("projects/deleteProject", {
-        projectId: this.project._id,
+      projectService.deleteProject(this.project._id, (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log(result);
+        if (result) {
+          this.$bus.emit("projectDeleted", this.project._id);
+        }
       });
     },
   },
