@@ -4,7 +4,9 @@ const state = () => ({
     method: "GET",
     url: "",
     queryParams: [],
+    exactQuery: false,
     headers: [],
+    exactHeaders: false,
     body: "",
     responseHeaders: [],
     responseBody: [],
@@ -27,6 +29,13 @@ const mutations = {
   },
   setStatus(state, status) {
     state.request.status = status;
+  },
+  setExactMatch(state,{ tabName, checked}){
+    if(tabName === 'Query'){
+      state.request.exactQuery = checked
+    }else{
+      state.request.exactHeaders = checked
+    }
   },
   setParameters(state, { tabName, sectionType, parameters }) {
     saveParamList(state, tabName, sectionType, parameters);
@@ -85,7 +94,9 @@ const mutations = {
       method: "GET",
       url: "",
       queryParams: [],
+      exactQuery: false,
       headers: [],
+      exactHeaders: false,
       body: "",
       responseHeaders: [],
       responseBody: [],
@@ -113,6 +124,15 @@ const getters = {
   },
   status(state) {
     return state.request.status;
+  },
+  exactMatch(state){
+    return (tabName) => {
+      if (tabName === "Query") {
+        return state.request.exactQuery;
+      } else {
+        return state.request.exactHeaders;
+      }
+    }    
   },
   bodyParams(state) {
     return (tabName, section) => {

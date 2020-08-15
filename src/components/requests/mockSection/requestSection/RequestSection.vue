@@ -31,6 +31,7 @@
         ></base-tab-item>
       </template>
     </base-tabs>
+    <exact-match v-if="showExactMatch()" :tabName="activeTab"></exact-match>
     <component :is="currentTab" :tabName="activeTab" :sectionType="'request'"></component>
   </div>
 </template>
@@ -40,6 +41,7 @@ import BaseTabs from "@/components/Base/BaseTabs";
 import BaseTabItem from "@/components/Base/BaseTabItem";
 import ParamSection from "../parameters/ParamSection";
 import BodySection from "../parameters/BodySection";
+import ExactMatch from "../requestSection/checkMatch";
 export default {
   data() {
     return {
@@ -64,6 +66,7 @@ export default {
     BaseTabItem,
     ParamSection,
     BodySection,
+    ExactMatch,
   },
   methods: {
     changeTab(tab) {
@@ -73,6 +76,12 @@ export default {
       } else {
         this.currentTab = "ParamSection";
       }
+    },
+    showExactMatch() {
+      if (this.activeTab === "Query" || this.activeTab === "Headers") {
+        return true;
+      }
+      return false;
     },
   },
 };
