@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="column is-1 is-inline-block">
-            <button class="button is-success is-pulled-right is-outlined" @click="requestAction()">
+            <button class="button is-success is-pulled-right is-outlined" :class="isLoading" @click="requestAction()">
               <slot name="title-action"></slot>
             </button>
           </div>
@@ -51,6 +51,9 @@ export default {
     },
   },
   computed: {
+     isLoading() {
+      return this.$store.getters["baseLoader/isBtnLoading"] ? 'is-loading': '';
+    },
     name: {
       get() {
         return this.$store.getters["mockRequest/name"];

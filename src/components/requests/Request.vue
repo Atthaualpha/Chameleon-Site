@@ -18,7 +18,7 @@
             </div>
             <div class="dropdown-menu is-small" :id="'request-options'+request._id" role="menu">
               <div class="dropdown-content">
-                <a href="#" class="dropdown-item has-text-info"  @click="copyApiUrl">
+                <a href="#" class="dropdown-item has-text-info" @click="copyApiUrl">
                   <i class="far fa-copy"></i>
                   Copy API Url
                 </a>
@@ -80,9 +80,9 @@ export default {
         this.request.method
       ];
     },
-    apiUrl(){
+    apiUrl() {
       return this.request.url;
-    }
+    },
   },
   methods: {
     enterMethod() {
@@ -97,21 +97,25 @@ export default {
         params: { requestId: this.request._id },
       });
     },
-    copyApiUrl(){
-        let inputCopy = document.createElement("input")
-        inputCopy.value = "http://localhost:3000/mocker/"+this.$route.params.projectId+"/"+this.request.url;
-        document.body.appendChild(inputCopy);
-        inputCopy.select();      
-        if(document.execCommand("copy")) {
-          this.$store.dispatch("baseGrowl/open", {
-              severity: "success",
-              message: "Url copied to clipboard!",
-            });
-        }
-        document.body.removeChild(inputCopy);
-        
+    copyApiUrl() {
+      let inputCopy = document.createElement("input");
+      inputCopy.value =
+        "http://localhost:3000/mocker/" +
+        this.$route.params.projectId +
+        "/" +
+        this.request.url;
+      document.body.appendChild(inputCopy);
+      inputCopy.select();
+      if (document.execCommand("copy")) {
+        this.$store.dispatch("baseGrowl/open", {
+          severity: "success",
+          message: "Url copied to clipboard!",
+        });
+      }
+      document.body.removeChild(inputCopy);
     },
     async deleteRequest() {
+      this.$store.commit("baseLoader/startLoading");
       requestService.deleteRequest(
         this.$route.params.projectId,
         this.request._id,
@@ -121,15 +125,16 @@ export default {
               severity: "danger",
               message: "Error deleting the request!",
             });
+            this.$store.commit("baseLoader/endLoading");
             return;
           }
-          if (res.completed) {
-            this.$emit("requestDeleted", this.request._id);
-            this.$store.dispatch("baseGrowl/open", {
-              severity: "success",
-              message: "Request deleted!",
-            });
-          }
+
+          this.$emit("requestDeleted", this.request._id);
+          this.$store.dispatch("baseGrowl/open", {
+            severity: "success",
+            message: "Request deleted!",
+          });
+          this.$store.commit("baseLoader/endLoading");
         }
       );
     },

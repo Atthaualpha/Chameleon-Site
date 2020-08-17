@@ -21,7 +21,8 @@
     </search-bar>
     <new-project @created="searchProjects"></new-project>
     <div>
-      <project-list :projectList="projectList"></project-list>
+      <progress v-show="isLoading" class="progress is-small is-info" max="100">50%</progress>
+      <project-list :projectList="projectList"></project-list>      
     </div>
   </div>
 </template>
@@ -40,18 +41,30 @@ export default {
       projectList: [],
     };
   },
+  computed: {
+    isLoading() {
+      return this.$store.getters["baseLoader/isLoading"];
+    },
+  },
   methods: {
     searchProjects() {
+      this.$store.commit("baseLoader/startLoading");      
       projectService.searchProjects(
         {
           name: this.projectName,
         },
         (err, response) => {
           if (err) {
-            console.log(err);
+            this.$store.dispatch("baseGrowl/open", {
+              severity: "danger",
+              message: "Error loading projects",
+            });
+            this.$store.commit("baseLoader/endLoading");
             return;
           }
           this.projectList = response.projects;
+          this.$store.commit("baseLoader/endLoading");
+          console.log("closed")
         }
       );
     },
@@ -61,13 +74,14 @@ export default {
       );
 
       this.projectList.splice(index, 1);
+      this.$store.commit("baseLoader/endLoading");
     },
-    updateProject(project) {
+    updateProject(projectUpdated) {
       const index = this.projectList.findIndex(
-        (project) => project._id == project._id
+        (project) => project._id == projectUpdated._id
       );
-
-      this.projectList.splice(index, 1, project);
+      this.projectList.splice(index, 1, projectUpdated);
+      this.$store.commit("baseLoader/endLoading");
     },
   },
   components: {

@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      title: this.project.name,
+      title: this.project.name,      
       isEditMode: false,
     };
   },
@@ -65,43 +65,51 @@ export default {
       this.title = newTitle;
     },
     changeEditMode(mode) {
+      if(!mode) {
+        this.project.name = this.title
+      }
+
       this.isEditMode = mode;
     },
     updateProject() {
+      this.$store.commit("baseLoader/startLoading");
       projectService.updateProject(this.project, (err, result) => {
         if (err) {
           this.$store.dispatch("baseGrowl/open", {
             severity: "danger",
             message: "Error updating the project!",
           });
+          this.$store.commit("baseLoader/endLoading");
           return;
         }
-        if (result) {
-          this.$bus.emit("projectUpdated", this.project);
-          this.changeEditMode(false);
+        if (result) {                    
           this.changeTitle(this.project.name);
+          this.changeEditMode(false);
           this.$store.dispatch("baseGrowl/open", {
             severity: "info",
             message: "Project updated!",
           });
+          this.$bus.emit("projectUpdated", this.project);
         }
       });
     },
     deleteProject() {
+      this.$store.commit("baseLoader/startLoading");
       projectService.deleteProject(this.project._id, (err, result) => {
         if (err) {          
           this.$store.dispatch("baseGrowl/open", {
             severity: "danger",
             message: "Error deleting the project!",
           });
+          this.$store.commit("baseLoader/endLoading");
           return;
         }        
-        if (result) {
-          this.$bus.emit("projectDeleted", this.project._id);
+        if (result) {          
           this.$store.dispatch("baseGrowl/open", {
             severity: "success",
             message: "Project deleted!",
           });
+          this.$bus.emit("projectDeleted", this.project._id);
         }
       });
     },
