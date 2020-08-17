@@ -23,9 +23,28 @@ export default {
               name: "RequestList",
               params: { projectId: this.$route.params.projectId },
             });
+            this.$store.dispatch("baseGrowl/open", {
+              severity: "success",
+              message: "Request created!",
+            });
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          const cause = err.response.cause;
+          if (cause) {
+            if (cause === "duplicated") {
+              this.$store.dispatch("baseGrowl/open", {
+                severity: "danger",
+                message: "Request duplicated, check url, query and headers",
+              });
+            }
+          } else {
+            this.$store.dispatch("baseGrowl/open", {
+              severity: "danger",
+              message: "Error creating the request",
+            });
+          }
+        });
     },
   },
   components: {

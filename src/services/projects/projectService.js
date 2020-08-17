@@ -7,7 +7,6 @@ const createProject = (project, callback) => {
       callback(null, res.completed);
     })
     .catch((err) => {
-      console.log(err);
       callback(err);
     });
 };

@@ -70,25 +70,38 @@ export default {
     updateProject() {
       projectService.updateProject(this.project, (err, result) => {
         if (err) {
-          console.log(err);
+          this.$store.dispatch("baseGrowl/open", {
+            severity: "danger",
+            message: "Error updating the project!",
+          });
           return;
         }
         if (result) {
           this.$bus.emit("projectUpdated", this.project);
           this.changeEditMode(false);
           this.changeTitle(this.project.name);
+          this.$store.dispatch("baseGrowl/open", {
+            severity: "info",
+            message: "Project updated!",
+          });
         }
       });
     },
     deleteProject() {
       projectService.deleteProject(this.project._id, (err, result) => {
-        if (err) {
-          console.log(err);
+        if (err) {          
+          this.$store.dispatch("baseGrowl/open", {
+            severity: "danger",
+            message: "Error deleting the project!",
+          });
           return;
-        }
-        console.log(result);
+        }        
         if (result) {
           this.$bus.emit("projectDeleted", this.project._id);
+          this.$store.dispatch("baseGrowl/open", {
+            severity: "success",
+            message: "Project deleted!",
+          });
         }
       });
     },

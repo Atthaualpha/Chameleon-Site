@@ -20,7 +20,6 @@ export default {
         return this.$store.getters["mockRequest/exactMatch"](this.tabName);
       },
       set(checked) {
-          console.log("entro",checked)
         return this.$store.commit("mockRequest/setExactMatch", {
           tabName: this.tabName,
           checked,

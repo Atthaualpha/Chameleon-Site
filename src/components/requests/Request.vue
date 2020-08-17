@@ -13,12 +13,19 @@
                 aria-haspopup="true"
                 :aria-controls="'request-options'+request._id"
               >
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-v has-text-white"></i>
               </span>
             </div>
-            <div class="dropdown-menu" :id="'request-options'+request._id" role="menu">
+            <div class="dropdown-menu is-small" :id="'request-options'+request._id" role="menu">
               <div class="dropdown-content">
-                <a href="#" class="dropdown-item has-text-danger" @click="deleteRequest">Delete</a>
+                <a href="#" class="dropdown-item has-text-info"  @click="copyApiUrl">
+                  <i class="far fa-copy"></i>
+                  Copy API Url
+                </a>
+                <a href="#" class="dropdown-item has-text-danger" @click="deleteRequest">
+                  <i class="far fa-trash-alt"></i>
+                  Delete
+                </a>
               </div>
             </div>
           </div>
@@ -73,6 +80,9 @@ export default {
         this.request.method
       ];
     },
+    apiUrl(){
+      return this.request.url;
+    }
   },
   methods: {
     enterMethod() {
@@ -87,13 +97,38 @@ export default {
         params: { requestId: this.request._id },
       });
     },
+    copyApiUrl(){
+        let inputCopy = document.createElement("input")
+        inputCopy.value = "http://localhost:3000/mocker/"+this.$route.params.projectId+"/"+this.request.url;
+        document.body.appendChild(inputCopy);
+        inputCopy.select();      
+        if(document.execCommand("copy")) {
+          this.$store.dispatch("baseGrowl/open", {
+              severity: "success",
+              message: "Url copied to clipboard!",
+            });
+        }
+        document.body.removeChild(inputCopy);
+        
+    },
     async deleteRequest() {
       requestService.deleteRequest(
         this.$route.params.projectId,
         this.request._id,
         (err, res) => {
+          if (err || !res.completed) {
+            this.$store.dispatch("baseGrowl/open", {
+              severity: "danger",
+              message: "Error deleting the request!",
+            });
+            return;
+          }
           if (res.completed) {
             this.$emit("requestDeleted", this.request._id);
+            this.$store.dispatch("baseGrowl/open", {
+              severity: "success",
+              message: "Request deleted!",
+            });
           }
         }
       );

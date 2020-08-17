@@ -24,13 +24,31 @@ export default {
     createProject() {
       projectService.createProject({ name: this.name }, (err, result) => {
         if (err) {
-          console.log(err);
+          const cause = err.response.cause;
+          if (cause) {
+            if (cause === "duplicated") {
+              this.$store.dispatch("baseGrowl/open", {
+                severity: "danger",
+                message: "Project with same name, already exists",
+              });
+            }else{
+              this.$store.dispatch("baseGrowl/open", {
+                severity: "danger",
+                message: "Error creating the project",
+              });
+            }
+          }
+
           return;
         }
 
         this.$store.commit("baseModal/closeModal");
         this.name = "";
         this.$bus.emit("searchProjectList");
+        this.$store.dispatch("baseGrowl/open", {
+          severity: "success",
+          message: "Project Created!",
+        });
       });
     },
   },
