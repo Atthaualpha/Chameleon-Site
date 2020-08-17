@@ -20,6 +20,12 @@ export default {
     loadRequest(requestFound) {
       this.$store.commit("mockRequest/setRequest", requestFound);
     },
+    goToRequestDuplicated(requestId){
+       this.$router.push({
+        name: "EditRequest",
+        params: { requestId: requestId },
+      });
+    },
     editRequest() {
       const editedRequest = this.$store.getters["mockRequest/request"];
       axios
@@ -41,9 +47,11 @@ export default {
           const cause = err.response.cause;
           if (cause) {
             if (cause === "duplicated") {
+              const requestId = err.response.requestIdDuplicated;
               this.$store.dispatch("baseGrowl/open", {
                 severity: "danger",
-                message: "Request duplicated: check url, query and headers",
+                message: "Request duplicated: check url, query, headers and status <a href='/edit-request/"+requestId+"'>Go to request duplicated</a>",
+                isHtml: true,
               });
             }
           }else{

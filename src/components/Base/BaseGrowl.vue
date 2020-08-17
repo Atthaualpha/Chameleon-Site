@@ -1,7 +1,8 @@
 <template>
   <div class="notification fixed-growl" :class="severity">
     <button class="delete" @click="hideNotification"></button>
-    <p>{{message}}</p>
+    <p v-if="!isHtml">{{message}}</p>
+    <p v-else><span v-html="message"></span></p>
   </div>
 </template>
 
@@ -13,6 +14,9 @@ export default {
     },
     message(){
       return this.$store.getters["baseGrowl/message"];
+    },
+    isHtml(){
+      return this.$store.getters["baseGrowl/isHtml"];
     }
 
   },
