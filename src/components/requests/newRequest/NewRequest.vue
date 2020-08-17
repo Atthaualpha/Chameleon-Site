@@ -35,7 +35,8 @@ export default {
             if (cause === "duplicated") {
               this.$store.dispatch("baseGrowl/open", {
                 severity: "danger",
-                message: "Request duplicated, check url, query and headers",
+                message: "Request duplicated, check url, query, headers and status <a href='#'>Go to request</a>",
+                isHtml: true
               });
             }
           } else {
