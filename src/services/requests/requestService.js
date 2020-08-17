@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const searchRequestByProject = (projectId, callback) => {
+const searchRequestByProject = (projectId, criteria, callback) => {
   axios
-    .get("/mock-request/all/" + projectId)
+    .get("/mock-request/all/" + projectId, { params: criteria })
     .then((res) => callback(null, res))
     .catch((err) => callback(err));
 };
