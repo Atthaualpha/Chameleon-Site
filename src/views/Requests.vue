@@ -32,6 +32,7 @@
         </button>
       </template>
     </base-search-bar>
+    <progress v-show="isLoading" class="progress is-small is-info" max="100">50%</progress>
     <request-list :requestList="requestList"></request-list>
   </div>
 </template>
@@ -48,18 +49,16 @@ export default {
       requestList: [],
     };
   },
-  components: {
-    requestList: RequestList,
-    baseSearchBar: BaseSearchBar,
-  },
-  mixins: [RestMethodMixin],
-
+  computed: {
+    isLoading() {
+      return this.$store.getters["baseLoader/isLoading"];
+    },
+  },  
   beforeRouteEnter(to, from, next) {
     requestService.searchRequestByProject(to.params.projectId, (err, res) => {
       next((vm) => vm.setRequestList(res.response.requestMocks));
     });
   },
-
   methods: {
     setRequestList(resultList) {
       this.requestList = resultList;
@@ -70,6 +69,11 @@ export default {
         params: { projectId: this.$route.params.projectId },
       });
     },
+  },
+  mixins: [RestMethodMixin],
+  components: {
+    requestList: RequestList,
+    baseSearchBar: BaseSearchBar,
   },
 };
 </script>

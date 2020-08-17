@@ -13,7 +13,7 @@
           <slot name="md-body"></slot>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success is-outlined" @click="mainAction">Create Project</button>
+          <button class="button is-success is-outlined" :class="isLoading" @click="mainAction">Create Project</button>
           <button class="button is-danger is-outlined" @click="closeModal">Cancel</button>
         </footer>
       </div>
@@ -23,8 +23,13 @@
 
 <script>
 import baseMixin from "@/mixin/baseModalMixin";
-export default {
-  mixins: [baseMixin],
+export default {  
+  computed: {
+    isLoading(){
+      return this.$store.getters["baseLoader/isBtnLoading"] ? 'is-loading' : '';
+    }
+  },
+  mixins: [baseMixin],  
   methods: {
     mainAction() {
       this.$emit("mainAction");

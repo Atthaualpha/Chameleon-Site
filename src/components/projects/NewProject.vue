@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     createProject() {
+      this.$store.commit("baseLoader/startBtnLoading");
       projectService.createProject({ name: this.name }, (err, result) => {
         if (err) {
           const cause = err.response.cause;
@@ -38,17 +39,19 @@ export default {
               });
             }
           }
-
+          this.$store.commit("baseLoader/endBtnLoading");
           return;
         }
 
+        this.$store.commit("baseLoader/endBtnLoading");
         this.$store.commit("baseModal/closeModal");
-        this.name = "";
-        this.$bus.emit("searchProjectList");
+        this.name = "";                
         this.$store.dispatch("baseGrowl/open", {
           severity: "success",
           message: "Project Created!",
         });
+        this.$bus.emit("searchProjectList");
+        
       });
     },
   },

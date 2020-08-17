@@ -27,6 +27,7 @@ export default {
       });
     },
     editRequest() {
+      this.$store.commit("baseLoader/startBtnLoading");
       const editedRequest = this.$store.getters["mockRequest/request"];
       axios
         .put("/mock-request/" + this.$route.params.requestId, editedRequest)
@@ -42,6 +43,7 @@ export default {
               message: "Request updated!",
             });
           }
+          this.$store.commit("baseLoader/endBtnLoading");
         })
         .catch((err) => {
           const cause = err.response.cause;
@@ -50,7 +52,7 @@ export default {
               const requestId = err.response.requestIdDuplicated;
               this.$store.dispatch("baseGrowl/open", {
                 severity: "danger",
-                message: "Request duplicated: check url, query, headers and status <a href='/edit-request/"+requestId+"'>Go to request duplicated</a>",
+                message: "Request duplicated: check url, query and headers <a href='/edit-request/"+requestId+"'>Go to request duplicated</a>",
                 isHtml: true,
               });
             }
@@ -60,6 +62,7 @@ export default {
                 message: "Error creating the request",
               });
           }
+          this.$store.commit("baseLoader/endBtnLoading");
         });
     },
   },
