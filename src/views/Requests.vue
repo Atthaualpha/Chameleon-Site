@@ -2,13 +2,19 @@
   <div>
     <base-search-bar :has-filters="true">
       <template v-slot:search>
-        <input class="input is-info" type="text" placeholder="Search Request" />
+        <input
+          class="input is-info"
+          type="text"
+          v-model="searchCriteria.name"
+          @change="searchRequest"
+          placeholder="Search Request"
+        />
       </template>
       <template v-slot:search-filter>
         <div class="columns">
           <div class="column is-3 is-inline-block">
             <div class="select">
-              <select>
+              <select v-model="searchCriteria.method" @change="searchRequest">
                 <option value>Method</option>
                 <option v-for="(method,i) in restMethods" :key="i" :value="method">{{method}}</option>
               </select>
@@ -16,8 +22,10 @@
           </div>
           <div class="column is-3 is-inline-block">
             <div class="select">
-              <select>
+              <select v-model="searchCriteria.status" @change="searchRequest">
                 <option value>Status</option>
+                <option value="200">200</option>
+                <option value="400">400</option>
               </select>
             </div>
           </div>
@@ -33,7 +41,7 @@
       </template>
     </base-search-bar>
     <progress v-show="isLoading" class="progress is-small is-info" max="100">50%</progress>
-    <request-list :requestList="requestList"></request-list>
+    <request-list v-show="!isLoading" :requestList="requestList"></request-list>
   </div>
 </template>
 
@@ -47,17 +55,26 @@ export default {
   data() {
     return {
       requestList: [],
+      searchCriteria: {
+        name: "",
+        status: "",
+        method: "",
+      },
     };
   },
   computed: {
     isLoading() {
       return this.$store.getters["baseLoader/isLoading"];
     },
-  },  
+  },
   beforeRouteEnter(to, from, next) {
-    requestService.searchRequestByProject(to.params.projectId, (err, res) => {
-      next((vm) => vm.setRequestList(res.response.requestMocks));
-    });
+    requestService.searchRequestByProject(
+      to.params.projectId,
+      null,
+      (err, res) => {
+        next((vm) => vm.setRequestList(res.response.requestMocks));
+      }
+    );
   },
   methods: {
     setRequestList(resultList) {
@@ -68,6 +85,25 @@ export default {
         name: "NewRequest",
         params: { projectId: this.$route.params.projectId },
       });
+    },
+    searchRequest() {
+      this.$store.commit("baseLoader/startLoading");
+      requestService.searchRequestByProject(
+        this.$route.params.projectId,
+        this.searchCriteria,
+        (err, res) => {
+          if(err) {
+             this.$store.dispatch("baseGrowl/open", {
+              severity: "danger",
+              message: "Error loading request",
+            });
+            return;
+          }
+
+          this.requestList = res.response.requestMocks;
+          this.$store.commit("baseLoader/endLoading");
+        }
+      );
     },
   },
   mixins: [RestMethodMixin],
