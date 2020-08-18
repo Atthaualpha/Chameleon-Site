@@ -56,6 +56,7 @@
 
 <script>
 import requestService from "@/services/requests/requestService";
+import axios from "axios";
 export default {
   props: {
     request: {
@@ -100,7 +101,7 @@ export default {
     copyApiUrl() {
       let inputCopy = document.createElement("input");
       inputCopy.value =
-        "http://localhost:3000/mocker/" +
+        axios.defaults.baseURL +
         this.$route.params.projectId +
         "/" +
         this.request.url;

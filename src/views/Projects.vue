@@ -21,8 +21,9 @@
     </search-bar>
     <new-project @created="searchProjects"></new-project>
     <div>
-      <progress v-show="isLoading" class="progress is-small is-info" max="100">50%</progress>
-      <project-list :projectList="projectList"></project-list>      
+      <progress v-show="isLoading" class="progress is-small is-info" max="100">50%</progress>     
+      <project-list :projectList="projectList"></project-list>
+      
     </div>
   </div>
 </template>
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     searchProjects() {
-      this.$store.commit("baseLoader/startLoading");      
+      this.$store.commit("baseLoader/startLoading");
       projectService.searchProjects(
         {
           name: this.projectName,
@@ -64,7 +65,6 @@ export default {
           }
           this.projectList = response.projects;
           this.$store.commit("baseLoader/endLoading");
-          console.log("closed")
         }
       );
     },
