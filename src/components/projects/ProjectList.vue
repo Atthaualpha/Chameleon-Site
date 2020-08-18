@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition-group name="project-list" >
+    <transition-group name="list-animate" >
       <project v-for="(project) in projectList" :key="project._id" :project="project"></project>
     </transition-group>
   </div>
@@ -22,13 +22,4 @@ export default {
 </script>
 
 <style>
-.project-list-enter-active,
-.project-list-leave-active {
-  transition: all 1s;
-}
-.project-list-enter,
-.project-list-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
 </style>

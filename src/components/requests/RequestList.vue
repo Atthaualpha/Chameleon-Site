@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition-group name="request-list">
+    <transition-group name="list-animate">
       <request-mock       
         v-for="request in requestList"
         :key="request._id"
@@ -35,13 +35,4 @@ export default {
 </script>
 
 <style>
-.request-list-enter-active,
-.request-list-leave-active {
-  transition: all 1s;
-}
-.request-list-enter,
-.request-list-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
 </style>
