@@ -65,7 +65,6 @@ export default {
           }
           this.projectList = response.projects;
           this.$store.commit("baseLoader/endLoading");
-          console.log("closed");
         }
       );
     },
