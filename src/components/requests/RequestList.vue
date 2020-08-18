@@ -1,11 +1,13 @@
 <template>
   <div>
-    <request-mock
-      @requestDeleted="removeRequest"
-      v-for="request in requestList"
-      :key="request.id"
-      :request="request"
-    ></request-mock>
+    <transition-group name="request-list">
+      <request-mock       
+        v-for="request in requestList"
+        :key="request._id"
+         @requestDeleted="removeRequest"
+        :request="request"
+      ></request-mock>
+    </transition-group>
   </div>
 </template>
 
@@ -33,4 +35,13 @@ export default {
 </script>
 
 <style>
+.request-list-enter-active,
+.request-list-leave-active {
+  transition: all 1s;
+}
+.request-list-enter,
+.request-list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 </style>

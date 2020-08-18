@@ -20,12 +20,15 @@
               </select>
             </div>
           </div>
-          <div class="column is-3 is-inline-block">
+          <div class="column is-2 is-inline-block">
             <div class="select">
               <select v-model="searchCriteria.status" @change="searchRequest">
                 <option value>Status</option>
-                <option value="200">200</option>
-                <option value="400">400</option>
+                 <option
+                  v-for="(status,i) in statusList"
+                  :value="status.code"
+                  :key="i"
+                >{{status.code}} - {{status.name}}</option>
               </select>
             </div>
           </div>
@@ -41,7 +44,7 @@
       </template>
     </base-search-bar>
     <progress v-show="isLoading" class="progress is-small is-info" max="100">50%</progress>
-    <request-list v-show="!isLoading" :requestList="requestList"></request-list>
+    <request-list :requestList="requestList"></request-list>
   </div>
 </template>
 
@@ -51,6 +54,7 @@ import BaseSearchBar from "../components/Base/BaseSearchBar";
 import RestMethodMixin from "../mixin/restMethodMixin";
 import axios from "axios";
 import requestService from "../services/requests/requestService";
+import restStatusMixin from "@/mixin/restStatusMixin";
 export default {
   data() {
     return {
@@ -67,19 +71,7 @@ export default {
       return this.$store.getters["baseLoader/isLoading"];
     },
   },
-  beforeRouteEnter(to, from, next) {
-    requestService.searchRequestByProject(
-      to.params.projectId,
-      null,
-      (err, res) => {
-        next((vm) => vm.setRequestList(res.response.requestMocks));
-      }
-    );
-  },
   methods: {
-    setRequestList(resultList) {
-      this.requestList = resultList;
-    },
     redirectCreateRequest() {
       this.$router.push({
         name: "NewRequest",
@@ -106,11 +98,14 @@ export default {
       );
     },
   },
-  mixins: [RestMethodMixin],
+  mixins: [RestMethodMixin,restStatusMixin],
   components: {
     requestList: RequestList,
     baseSearchBar: BaseSearchBar,
   },
+  created(){
+    this.searchRequest();
+  }
 };
 </script>
 

@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VueBus from "vue-bus";
-
+import('animate.css')
 require("./config/httpConfig");
 require("../public/scss/main.scss");
 

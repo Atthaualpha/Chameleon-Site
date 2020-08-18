@@ -3,9 +3,14 @@
     <div class="column is-flex">
       <main-header class="column is-2"></main-header>
       <main class="column is-10">
-        <growl-message v-if="showGrowl"></growl-message>
+        <transition
+          enter-active-class="animate__animated animate__fadeInRight"
+          leave-active-class="animate__animated animate__fadeOutRight"
+        >
+          <growl-message v-if="showGrowl"></growl-message>
+        </transition>
         <router-view />
-        <main-footer></main-footer>        
+        <main-footer></main-footer>
       </main>
     </div>
   </div>
@@ -14,17 +19,17 @@
 <script>
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import GrowlMessage from "./components/Base/BaseGrowl"
+import GrowlMessage from "./components/Base/BaseGrowl";
 export default {
   computed: {
-    showGrowl(){
+    showGrowl() {
       return this.$store.getters["baseGrowl/status"];
-    }
+    },
   },
   components: {
     mainHeader: Header,
     mainFooter: Footer,
-    GrowlMessage
+    GrowlMessage,
   },
 };
 </script>
