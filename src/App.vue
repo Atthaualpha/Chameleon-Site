@@ -41,4 +41,14 @@ export default {
 body {
   background-color: hsl(206, 70%, 96%);
 }
+
+.list-animate-enter-active,
+.list-animate-leave-active {
+  transition: all 1s;
+}
+.list-animate-enter,
+.list-animate-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 </style>

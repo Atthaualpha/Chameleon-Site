@@ -24,7 +24,7 @@
             <div class="select">
               <select v-model="searchCriteria.status" @change="searchRequest">
                 <option value>Status</option>
-                 <option
+                <option
                   v-for="(status,i) in statusList"
                   :value="status.code"
                   :key="i"
@@ -84,8 +84,8 @@ export default {
         this.$route.params.projectId,
         this.searchCriteria,
         (err, res) => {
-          if(err) {
-             this.$store.dispatch("baseGrowl/open", {
+          if (err) {
+            this.$store.dispatch("baseGrowl/open", {
               severity: "danger",
               message: "Error loading request",
             });
@@ -98,14 +98,18 @@ export default {
       );
     },
   },
-  mixins: [RestMethodMixin,restStatusMixin],
+  mixins: [RestMethodMixin, restStatusMixin],
   components: {
     requestList: RequestList,
     baseSearchBar: BaseSearchBar,
   },
-  created(){
+  created() {
+    const methodQuery = this.$route.query.methodSelected;
+    if (methodQuery) {
+      this.searchCriteria.method = methodQuery;
+    }
     this.searchRequest();
-  }
+  },
 };
 </script>
 
