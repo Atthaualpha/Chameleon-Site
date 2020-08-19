@@ -35,9 +35,11 @@ export default {
           const cause = err.response.cause;
           if (cause) {
             if (cause === "duplicated") {
+              const requestId = err.response.requestIdDuplicated;
+              console.log(requestId)
               this.$store.dispatch("baseGrowl/open", {
                 severity: "danger",
-                message: "Request duplicated, check url, query, headers and status <a href='#'>Go to request</a>",
+                message: "Request duplicated: check url, query and headers <a href='/edit-request/"+requestId+"'>Go to request duplicated</a>",
                 isHtml: true
               });
             }
@@ -46,7 +48,7 @@ export default {
               severity: "danger",
               message: "Error creating the request",
             });
-          }
+          }          
           this.$store.commit("baseLoader/endBtnLoading");
         });
     },
