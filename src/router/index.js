@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 import Home from "../views/Home.vue";
 import Projects from "../views/Projects.vue";
 
@@ -45,5 +46,23 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  validateRoute(to, from, () => {
+    next();
+  });
+});
+
+const validateRoute = (to, from, callback) => {
+  if (to.name === "RequestList" && from.name !== "EditRequest") {
+    store.commit("menu/setProject", {
+      id: to.params.projectId,
+      name: to.query.name,
+    });
+  } else if (to.name === "ProjectList" || to.name === "Home") {
+    store.commit("menu/clearProject");
+  }
+  callback();
+};
 
 export default router;

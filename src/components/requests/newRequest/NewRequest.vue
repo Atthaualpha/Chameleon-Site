@@ -31,7 +31,7 @@ export default {
           }
           this.$store.commit("baseLoader/endBtnLoading");
         })
-        .catch((err) => {
+        .catch((err) => {          
           const cause = err.response.cause;
           if (cause) {
             if (cause === "duplicated") {
