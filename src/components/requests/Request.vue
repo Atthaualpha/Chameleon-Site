@@ -95,7 +95,7 @@ export default {
     redirectEditRequest() {
       this.$router.push({
         name: "EditRequest",
-        params: { requestId: this.request._id },
+        params: { requestId: this.request._id }
       });
     },
     copyApiUrl() {

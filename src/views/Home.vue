@@ -4,7 +4,7 @@
     <div class>
       <transition-group name="list-animate">
         <div
-          @mouseenter="selectProject(project.projectId)"
+          @mouseenter="selectProject(project)"
           class="column is-6 is-inline-block"
           v-for="project in projects"
           :key="project.projectId"
@@ -53,21 +53,21 @@ export default {
       chartEvents: {
         select: () => {
           const indexRow = this.$refs[
-            "GCP" + this.currentProject
+            "GCP" + this.currentProject.projectId
           ][0].chartObject.getSelection()[0].row;
-          const methodSelected = this.$refs["GCP" + this.currentProject][0]
+          const methodSelected = this.$refs["GCP" + this.currentProject.projectId][0]
             .data[indexRow + 1];
           this.$router.push({
-            path: "/requests/" + this.currentProject,
-            query: { methodSelected: methodSelected[0] },
+            path: "/requests/" + this.currentProject.projectId,
+            query: { methodSelected: methodSelected[0], name: this.currentProject.projectName },
           });
         },
       },
     };
   },
   methods: {
-    selectProject(id) {
-      this.currentProject = id;
+    selectProject(project) {
+      this.currentProject = project
     },
   },
   created() {

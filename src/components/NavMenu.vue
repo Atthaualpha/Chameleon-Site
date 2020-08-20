@@ -13,19 +13,34 @@
           <i class="fas fa-lightbulb"></i>
           Projects
         </router-link>
-      </li>
-      <li>
-        <router-link to="/tester" :exact="true" tag="a" active-class="is-active">
-          <i class="fas fa-flask"></i>
-          Laboratory
-        </router-link>
+        <ul>
+          <transition
+            enter-active-class="animate__animated animate__fadeInUp"
+            leave-active-class="animate__animated animate__fadeOutDown"
+          >
+            <li v-if="project && project.id">
+              <router-link
+                :to="'/requests/'+project.id"
+                tag="a"
+                active-class="is-active"
+                :class="project.id ? 'is-active': ''"
+              >{{project.name}}</router-link>
+            </li>
+          </transition>
+        </ul>
       </li>
     </ul>
   </aside>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    project() {
+      return this.$store.getters["menu/currentProject"];
+    },
+  },
+};
 </script>
 
 <style>

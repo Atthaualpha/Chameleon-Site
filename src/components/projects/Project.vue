@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     openProject() {
-      this.$router.push({ path: "/requests/" + this.project._id });
+      this.$router.push({ path: "/requests/" + this.project._id, query: {name: this.project.name} });
     },
     changeTitle(newTitle) {
       this.title = newTitle;
